@@ -1,49 +1,49 @@
 {
-  "name": "onix-systems-php/hyperf-notifications",
-  "description": "An extension that consists of notifications functionality for an application",
-  "type": "extention",
-  "license": "MIT",
-  "keywords": [
-    "php",
-    "hyperf"
-  ],
-  "autoload": {
-    "psr-4": {
-      "OnixSystemsPHP\\HyperfNotifications\\": "src/"
+    "name": "onix-systems-php/hyperf-notifications",
+    "description": "An extension that consists of notifications functionality for an application",
+    "type": "extention",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "hyperf"
+    ],
+    "autoload": {
+        "psr-4": {
+            "OnixSystemsPHP\\HyperfNotifications\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OnixSystemsPHP\\HyperfNotifications\\Test\\": "tests"
+        }
+    },
+    "require": {
+        "php": ">=8.0",
+        "ext-json": "*",
+        "onix-systems-php/hyperf-core": ">=1.0.7",
+        "onix-systems-php/hyperf-file-upload": "^1.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "mockery/mockery": "^1.0",
+        "phpstan/phpstan": "^1.0",
+        "phpunit/phpunit": ">=7.0",
+        "swoole/ide-helper": "^4.5|^5.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "phpunit -c phpunit.xml --colors=always",
+        "analyse": "phpstan analyse --memory-limit 1024M -l 0 ./src",
+        "cs-fix": "php-cs-fixer fix $1"
+    },
+    "extra": {
+        "hyperf": {
+            "config": "OnixSystemsPHP\\HyperfNotifications\\ConfigProvider"
+        }
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "OnixSystemsPHP\\HyperfNotifications\\Test\\": "tests"
-    }
-  },
-  "require": {
-    "php": ">=8.0",
-    "ext-json": "*",
-    "onix-systems-php/hyperf-core": ">=1.0.7",
-    "hyperf/database": "^2.2|^3.0"
-  },
-  "require-dev": {
-    "friendsofphp/php-cs-fixer": "^3.0",
-    "mockery/mockery": "^1.0",
-    "phpstan/phpstan": "^1.0",
-    "phpunit/phpunit": ">=7.0",
-    "swoole/ide-helper": "^4.5|^5.0"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "config": {
-    "optimize-autoloader": true,
-    "sort-packages": true
-  },
-  "scripts": {
-    "test": "phpunit -c phpunit.xml --colors=always",
-    "analyse": "phpstan analyse --memory-limit 1024M -l 0 ./src",
-    "cs-fix": "php-cs-fixer fix $1"
-  },
-  "extra": {
-    "hyperf": {
-      "config": "OnixSystemsPHP\\HyperfNotifications\\ConfigProvider"
-    }
-  }
 }
