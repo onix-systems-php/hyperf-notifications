@@ -12,6 +12,7 @@ namespace OnixSystemsPHP\HyperfNotifications\Service;
 
 use Carbon\Carbon;
 use Hyperf\DbConnection\Annotation\Transactional;
+use OnixSystemsPHP\HyperfCore\Exception\BusinessException;
 use OnixSystemsPHP\HyperfCore\Service\Service;
 use OnixSystemsPHP\HyperfNotifications\Model\Notification;
 use OnixSystemsPHP\HyperfNotifications\Repository\NotificationRepository;
@@ -30,7 +31,9 @@ class NotificationReadService
             $this->rNotification->getById($notificationId),
             function (Notification $notification) {
                 $this->rNotification->update($notification, ['seen_at' => Carbon::now()]);
-                $this->rNotification->save($notification);
+                if (!$this->rNotification->save($notification)) {
+                    throw new BusinessException(__('exceptions.php.400'));
+                }
             }
         );
     }

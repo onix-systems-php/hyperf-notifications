@@ -96,7 +96,7 @@ class NotificationsController extends AbstractController
      *     @OA\Parameter(ref="#/components/parameters/Locale"),
      *     @OA\Response(response=200, description="", @OA\JsonContent(
      *         @OA\Property(property="status", type="string"),
-     *         @OA\Property(property="data", ref="#/components/schemas/ResourceNotificationStatistic"),
+     *         @OA\Property(property="data", ref="#/components/schemas/ResourceNotification"),
      *     )),
      *     @OA\Response(response=401, ref="#/components/responses/401"),
      *     @OA\Response(response=500, ref="#/components/responses/500"),
