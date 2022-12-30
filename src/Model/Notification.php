@@ -11,7 +11,9 @@ declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfNotifications\Model;
 
 use Carbon\Carbon;
+use Hyperf\Contract\ConfigInterface;
 use Hyperf\Database\Model\Relations\MorphOne;
+use Hyperf\Utils\ApplicationContext;
 use OnixSystemsPHP\HyperfCore\Model\AbstractOwnedModel;
 use OnixSystemsPHP\HyperfFileUpload\Model\Behaviour\FileRelations;
 use OnixSystemsPHP\HyperfFileUpload\Model\File;
@@ -64,7 +66,9 @@ class Notification extends AbstractOwnedModel
             'image' => [
                 'limit' => 1,
                 'required' => false,
-                'mimeTypes' => Value('file_upload.image_mime_types'),
+                'mimeTypes' => ApplicationContext::getContainer()
+                    ->get(ConfigInterface::class)
+                    ->get('file_upload.image_mime_types'),
                 'presets' => [
                     '150x150' => ['fit' => [150, 150]],
                 ],
