@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfNotifications\Resource;
 
 use OnixSystemsPHP\HyperfCore\Resource\AbstractResource;
+use OnixSystemsPHP\HyperfNotifications\DTO\NotificationStatisticResultDTO;
 use OpenApi\Annotations as OA;
 
 /**
@@ -19,8 +20,8 @@ use OpenApi\Annotations as OA;
  *     type="object",
  *     @OA\Property(property="count", type="integer"),
  * )
- * @method __construct(array $resource)
- * @property array $resource
+ * @method __construct(NotificationStatisticResultDTO $resource)
+ * @property NotificationStatisticResultDTO $resource
  */
 class ResourceNotificationStatistic extends AbstractResource
 {
@@ -30,7 +31,7 @@ class ResourceNotificationStatistic extends AbstractResource
     public function toArray(): array
     {
         return [
-            'count' => $this->resource['count'],
+            'count' => $this->resource->count,
         ];
     }
 }

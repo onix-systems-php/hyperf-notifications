@@ -10,7 +10,6 @@ declare(strict_types=1);
  */
 namespace OnixSystemsPHP\HyperfNotifications\Controller;
 
-use Hyperf\HttpServer\Annotation\Controller;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use OnixSystemsPHP\HyperfCore\Controller\AbstractController;
 use OnixSystemsPHP\HyperfCore\DTO\Common\PaginationRequestDTO;
@@ -22,24 +21,15 @@ use OnixSystemsPHP\HyperfNotifications\Service\NotificationsListingService;
 use OnixSystemsPHP\HyperfNotifications\Service\NotificationStatisticService;
 use OpenApi\Annotations as OA;
 
-#[Controller]
 class NotificationsController extends AbstractController
 {
     /**
      * @OA\Get(
-     *     path="/v1{namespace}/notifications",
+     *     path="/v1/notifications",
      *     summary="Get list of notifications",
      *     operationId="appNotifications",
      *     tags={"notifications"},
      *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(
-     *         name="namespace",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(type="string", default="/admin"),
-     *         description="Route namespace",
-     *         example="/admin | /"
-     *     ),
      *     @OA\Parameter(ref="#/components/parameters/Locale"),
      *     @OA\Parameter(ref="#/components/parameters/Pagination_page"),
      *     @OA\Parameter(ref="#/components/parameters/Pagination_per_page"),
@@ -71,19 +61,11 @@ class NotificationsController extends AbstractController
 
     /**
      * @OA\Get(
-     *     path="/v1{namespace}/notifications/statistic",
+     *     path="/v1/notifications/statistic",
      *     summary="Get notifications statistic",
      *     operationId="appNotificationStatistic",
      *     tags={"notifications"},
      *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(
-     *         name="namespace",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(type="string", default="/admin"),
-     *         description="Route namespace",
-     *         example="/admin | /"
-     *     ),
      *     @OA\Parameter(ref="#/components/parameters/Locale"),
      *     @OA\Response(response=200, description="", @OA\JsonContent(
      *         @OA\Property(property="status", type="string"),
@@ -100,7 +82,7 @@ class NotificationsController extends AbstractController
 
     /**
      * @OA\Post(
-     *     path="/v1{namespace}/notifications/{notificationId}/read",
+     *     path="/v1/notifications/{notificationId}/read",
      *     summary="Get notifications statistic",
      *     operationId="appNotificationStatistic",
      *     tags={"notifications"},
@@ -110,14 +92,6 @@ class NotificationsController extends AbstractController
      *         in="path", required=true,
      *         @OA\Schema(type="integer"),
      *         description="Notification ID"
-     *     ),
-     *     @OA\Parameter(
-     *         name="namespace",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(type="string", default="/admin"),
-     *         description="Route namespace",
-     *         example="/admin | /"
      *     ),
      *     @OA\Parameter(ref="#/components/parameters/Locale"),
      *     @OA\Response(response=200, description="", @OA\JsonContent(

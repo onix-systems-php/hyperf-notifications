@@ -12,16 +12,21 @@ namespace OnixSystemsPHP\HyperfNotifications\Service;
 
 use Hyperf\DbConnection\Annotation\Transactional;
 use OnixSystemsPHP\HyperfCore\Service\Service;
-use OnixSystemsPHP\HyperfNotifications\Model\Notification;
+use OnixSystemsPHP\HyperfNotifications\DTO\NotificationStatisticResultDTO;
+use OnixSystemsPHP\HyperfNotifications\Repository\NotificationRepository;
 
 #[Service]
 class NotificationStatisticService
 {
-    #[Transactional(attempts: 1)]
-    public function statistic(): array
+    public function __construct(private NotificationRepository $rNotification)
     {
-        return [
-            'count' => Notification::count(),
-        ];
+    }
+
+    #[Transactional(attempts: 1)]
+    public function statistic(): NotificationStatisticResultDTO
+    {
+        return NotificationStatisticResultDTO::make([
+            'count' => $this->rNotification->query()->count(),
+        ]);
     }
 }

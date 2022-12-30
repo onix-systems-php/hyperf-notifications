@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfNotifications\Service;
 
 use Hyperf\DbConnection\Annotation\Transactional;
+use OnixSystemsPHP\HyperfCore\Exception\BusinessException;
 use OnixSystemsPHP\HyperfCore\Service\Service;
 use OnixSystemsPHP\HyperfNotifications\DTO\AddNotificationDTO;
 use OnixSystemsPHP\HyperfNotifications\Model\Notification;
@@ -26,6 +27,13 @@ class NotificationAddService
     #[Transactional(attempts: 1)]
     public function add(AddNotificationDTO $notificationData): Notification
     {
-        return $this->rNotification->create($notificationData->toArray());
+        return tap(
+            $this->rNotification->create($notificationData->toArray()),
+            static function (Notification $notification) {
+                if (! $notification->save()) {
+                    throw new BusinessException(__('exceptions.php.400'));
+                }
+            }
+        );
     }
 }

@@ -12,7 +12,7 @@ namespace OnixSystemsPHP\HyperfNotifications\Model;
 
 use Carbon\Carbon;
 use Hyperf\Database\Model\Relations\MorphOne;
-use OnixSystemsPHP\HyperfCore\Model\AbstractModel;
+use OnixSystemsPHP\HyperfCore\Model\AbstractOwnedModel;
 use OnixSystemsPHP\HyperfFileUpload\Model\Behaviour\FileRelations;
 use OnixSystemsPHP\HyperfFileUpload\Model\File;
 
@@ -32,7 +32,7 @@ use OnixSystemsPHP\HyperfFileUpload\Model\File;
  * @property ?File $image
  * @method MorphOne image()
  */
-class Notification extends AbstractModel
+class Notification extends AbstractOwnedModel
 {
     use FileRelations;
 

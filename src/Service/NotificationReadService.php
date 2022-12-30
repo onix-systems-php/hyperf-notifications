@@ -10,6 +10,7 @@ declare(strict_types=1);
  */
 namespace OnixSystemsPHP\HyperfNotifications\Service;
 
+use Carbon\Carbon;
 use Hyperf\DbConnection\Annotation\Transactional;
 use OnixSystemsPHP\HyperfCore\Service\Service;
 use OnixSystemsPHP\HyperfNotifications\Model\Notification;
@@ -28,7 +29,7 @@ class NotificationReadService
         return tap(
             $this->rNotification->getById($notificationId),
             function (Notification $notification) {
-                $this->rNotification->update($notification, ['seen_at' => date('Y-m-d H:i:s')]);
+                $this->rNotification->update($notification, ['seen_at' => Carbon::now()]);
                 $this->rNotification->save($notification);
             }
         );
