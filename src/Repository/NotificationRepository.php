@@ -46,4 +46,9 @@ class NotificationRepository extends AbstractRepository
     {
         return $this->finder('id', $id)->fetchOne($lock, $force);
     }
+
+    public function scopeId(Builder $query, int $id): void
+    {
+        $query->where('id', '=', $id);
+    }
 }
