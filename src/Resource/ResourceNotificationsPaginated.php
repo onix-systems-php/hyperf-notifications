@@ -12,21 +12,22 @@ namespace OnixSystemsPHP\HyperfNotifications\Resource;
 
 use OnixSystemsPHP\HyperfCore\DTO\Common\PaginationResultDTO;
 use OnixSystemsPHP\HyperfCore\Resource\AbstractPaginatedResource;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 
 /**
- * @OA\Schema(
- *     schema="ResourceNotificationsPaginated",
- *     type="object",
- *     @OA\Property(property="list", type="array", @OA\Items(ref="#/components/schemas/ResourceNotification")),
- *     @OA\Property(property="total", type="integer"),
- *     @OA\Property(property="page", type="integer"),
- *     @OA\Property(property="per_page", type="integer"),
- *     @OA\Property(property="total_pages", type="integer"),
- * ),
  * @method __construct(PaginationResultDTO $resource)
  * @property PaginationResultDTO $resource
  */
+#[OA\Schema(
+    schema: 'ResourceNotificationsPaginated',
+    properties: [
+        new OA\Property(property: 'list', type: 'array', items: new OA\Items(ref: '#/components/schemas/ResourceNotification')),
+        new OA\Property(property: 'total', type: 'integer'),
+        new OA\Property(property: 'page', type: 'integer'),
+        new OA\Property(property: 'per_page', type: 'integer'),
+        new OA\Property(property: 'total_pages', type: 'integer'),
+    ],
+)]
 class ResourceNotificationsPaginated extends AbstractPaginatedResource
 {
     /**

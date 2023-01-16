@@ -13,28 +13,29 @@ namespace OnixSystemsPHP\HyperfNotifications\Resource;
 use OnixSystemsPHP\HyperfCore\Resource\AbstractResource;
 use OnixSystemsPHP\HyperfFileUpload\Resource\ResourceFile;
 use OnixSystemsPHP\HyperfNotifications\Model\Notification;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 
 /**
- * @OA\Schema(
- *     schema="ResourceNotification",
- *     type="object",
- *     @OA\Property(property="id", type="integer"),
- *     @OA\Property(property="user_id", type="integer"),
- *     @OA\Property(property="transport", type="string"),
- *     @OA\Property(property="type", type="string"),
- *     @OA\Property(property="target", type="string"),
- *     @OA\Property(property="target_id", type="string"),
- *     @OA\Property(property="image", ref="#/components/schemas/ResourceFile"),
- *     @OA\Property(property="title", type="string"),
- *     @OA\Property(property="text", type="string"),
- *     @OA\Property(property="seen_at", type="string"),
- *     @OA\Property(property="created_at", type="string"),
- *     @OA\Property(property="updated_at", type="string"),
- * )
  * @method __construct(Notification $resource)
  * @property Notification $resource
  */
+#[OA\Schema(
+    schema: 'ResourceNotification',
+    properties: [
+        new OA\Property(property: 'id', type: 'integer'),
+        new OA\Property(property: 'user_id', type: 'integer'),
+        new OA\Property(property: 'transport', type: 'string'),
+        new OA\Property(property: 'type', type: 'string'),
+        new OA\Property(property: 'target', type: 'string'),
+        new OA\Property(property: 'target_id', type: 'string'),
+        new OA\Property(property: 'image', ref: '#/components/schemas/ResourceFile'),
+        new OA\Property(property: 'title', type: 'string'),
+        new OA\Property(property: 'text', type: 'string'),
+        new OA\Property(property: 'seen_at', type: 'string'),
+        new OA\Property(property: 'created_at', type: 'string'),
+        new OA\Property(property: 'updated_at', type: 'string'),
+    ],
+)]
 class ResourceNotification extends AbstractResource
 {
     /**

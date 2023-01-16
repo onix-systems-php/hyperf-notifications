@@ -12,18 +12,18 @@ namespace OnixSystemsPHP\HyperfNotifications\Model\Filter;
 
 use Hyperf\Database\Model\Builder;
 use OnixSystemsPHP\HyperfCore\Model\Filter\AbstractFilter;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Parameter(parameter="NotificationsFilter__only_unread", in="query", name="only_unred", @OA\Schema(type="boolean"))
- * @OA\Parameter(parameter="NotificationsFilter__transport", in="query", name="transport", example="email", @OA\Schema(type="string"))
- * @OA\Parameter(parameter="NotificationsFilter__type", in="query", name="type", example="send_message", @OA\Schema(type="string"))
- * @OA\Parameter(parameter="NotificationsFilter__target", in="query", name="target", example="message", @OA\Schema(type="string"))
- * @OA\Parameter(parameter="NotificationsFilter__target_id", in="query", name="target_id", example="1", @OA\Schema(type="string"))
- * @OA\Parameter(parameter="NotificationsFilter__title", in="query", name="title", example="Title", @OA\Schema(type="string"))
- * @OA\Parameter(parameter="NotificationsFilter__text", in="query", name="text", example="Text", @OA\Schema(type="string"))
- * @OA\Parameter(parameter="NotificationsFilter__user_id", in="query", name="action", example="1", @OA\Schema(type="integer"))
- */
+#[
+    OA\Parameter(parameter: 'NotificationsFilter__only_unread', name: 'only_unread', in: 'query', schema: new OA\Schema(type: 'boolean')),
+    OA\Parameter(parameter: 'NotificationsFilter__transport', name: 'transport', in: 'query', schema: new OA\Schema(type: 'string')),
+    OA\Parameter(parameter: 'NotificationsFilter__type', name: 'type', in: 'query', schema: new OA\Schema(type: 'string')),
+    OA\Parameter(parameter: 'NotificationsFilter__target', name: 'target', in: 'query', schema: new OA\Schema(type: 'string')),
+    OA\Parameter(parameter: 'NotificationsFilter__target_id', name: 'target_id', in: 'query', schema: new OA\Schema(type: 'string')),
+    OA\Parameter(parameter: 'NotificationsFilter__title', name: 'title', in: 'query', schema: new OA\Schema(type: 'string')),
+    OA\Parameter(parameter: 'NotificationsFilter__text', name: 'text', in: 'query', schema: new OA\Schema(type: 'string')),
+    OA\Parameter(parameter: 'NotificationsFilter__user_id', name: 'user_id', in: 'query', schema: new OA\Schema(type: 'integer')),
+]
 class NotificationFilter extends AbstractFilter
 {
     public function userId(int $param): void

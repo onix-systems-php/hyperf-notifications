@@ -22,6 +22,8 @@ use OnixSystemsPHP\HyperfNotifications\Model\Notification;
  * @method Notification update(Notification $model, array $data)
  * @method Notification save(Notification $model)
  * @method bool delete(Notification $model)
+ * @method Builder|NotificationRepository finder(string $type, ...$parameters)
+ * @method null|Notification fetchOne(bool $lock, bool $force)
  */
 class NotificationRepository extends AbstractRepository
 {
@@ -42,18 +44,6 @@ class NotificationRepository extends AbstractRepository
 
     public function getById(int $id, bool $lock = false, bool $force = false): ?Notification
     {
-        return $this->fetchOne($this->queryById($id), $lock, $force);
-    }
-
-    public function queryById(int $id): Builder
-    {
-        return $this->query()->where('id', $id);
-    }
-
-    protected function fetchOne(Builder $builder, bool $lock, bool $force): ?Notification
-    {
-        /** @var ?Notification $result */
-        $result = parent::fetchOne($builder, $lock, $force);
-        return $result;
+        return $this->finder('id', $id)->fetchOne($lock, $force);
     }
 }

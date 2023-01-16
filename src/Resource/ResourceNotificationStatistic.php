@@ -12,17 +12,18 @@ namespace OnixSystemsPHP\HyperfNotifications\Resource;
 
 use OnixSystemsPHP\HyperfCore\Resource\AbstractResource;
 use OnixSystemsPHP\HyperfNotifications\DTO\NotificationStatisticResultDTO;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 
 /**
- * @OA\Schema(
- *     schema="ResourceNotificationStatistic",
- *     type="object",
- *     @OA\Property(property="count", type="integer"),
- * )
  * @method __construct(NotificationStatisticResultDTO $resource)
  * @property NotificationStatisticResultDTO $resource
  */
+#[OA\Schema(
+    schema: 'ResourceNotificationStatistic',
+    properties: [
+        new OA\Property(property: 'count', type: 'integer'),
+    ],
+)]
 class ResourceNotificationStatistic extends AbstractResource
 {
     /**

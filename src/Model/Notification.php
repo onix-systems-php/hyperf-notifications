@@ -38,13 +38,13 @@ class Notification extends AbstractOwnedModel
 {
     use FileRelations;
 
-    protected $table = 'notifications';
+    protected ?string $table = 'notifications';
 
-    protected $guarded = [];
+    protected array $guarded = [];
 
-    protected $hidden = [];
+    protected array $hidden = [];
 
-    protected $casts = [
+    protected array $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
         'transport' => 'string',
