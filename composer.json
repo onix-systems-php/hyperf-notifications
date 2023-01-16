@@ -18,9 +18,10 @@
         }
     },
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "ext-json": "*",
-        "onix-systems-php/hyperf-core": ">=1.0.7",
+        "ext-redis": "*",
+        "onix-systems-php/hyperf-core": ">=1.1.0",
         "onix-systems-php/hyperf-file-upload": "^1.0"
     },
     "require-dev": {

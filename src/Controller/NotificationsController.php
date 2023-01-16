@@ -19,37 +19,39 @@ use OnixSystemsPHP\HyperfNotifications\Resource\ResourceNotificationStatistic;
 use OnixSystemsPHP\HyperfNotifications\Service\NotificationReadService;
 use OnixSystemsPHP\HyperfNotifications\Service\NotificationsListingService;
 use OnixSystemsPHP\HyperfNotifications\Service\NotificationStatisticService;
-use OpenApi\Annotations as OA;
+use OpenApi\Attributes as OA;
 
 class NotificationsController extends AbstractController
 {
-    /**
-     * @OA\Get(
-     *     path="/v1/notifications",
-     *     summary="Get list of notifications",
-     *     operationId="appNotifications",
-     *     tags={"notifications"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(ref="#/components/parameters/Locale"),
-     *     @OA\Parameter(ref="#/components/parameters/Pagination_page"),
-     *     @OA\Parameter(ref="#/components/parameters/Pagination_per_page"),
-     *     @OA\Parameter(ref="#/components/parameters/Pagination_order"),
-     *     @OA\Parameter(ref="#/components/parameters/NotificationsFilter__user_id"),
-     *     @OA\Parameter(ref="#/components/parameters/NotificationsFilter__transport"),
-     *     @OA\Parameter(ref="#/components/parameters/NotificationsFilter__type"),
-     *     @OA\Parameter(ref="#/components/parameters/NotificationsFilter__target"),
-     *     @OA\Parameter(ref="#/components/parameters/NotificationsFilter__target_id"),
-     *     @OA\Parameter(ref="#/components/parameters/NotificationsFilter__title"),
-     *     @OA\Parameter(ref="#/components/parameters/NotificationsFilter__text"),
-     *     @OA\Parameter(ref="#/components/parameters/NotificationsFilter__only_unread"),
-     *     @OA\Response(response=200, description="", @OA\JsonContent(
-     *         @OA\Property(property="status", type="string"),
-     *         @OA\Property(property="data", ref="#/components/schemas/ResourceNotificationsPaginated"),
-     *     )),
-     *     @OA\Response(response=401, ref="#/components/responses/401"),
-     *     @OA\Response(response=500, ref="#/components/responses/500"),
-     * )
-     */
+    #[OA\Get(
+        path: '/v1/notifications',
+        operationId: 'appNotifications',
+        summary: 'Get list of notifications',
+        security: [['bearerAuth' => []]],
+        tags: ['notifications'],
+        parameters: [
+            new OA\Parameter(ref: '#/components/parameters/Locale'),
+            new OA\Parameter(ref: '#/components/parameters/Pagination_page'),
+            new OA\Parameter(ref: '#/components/parameters/Pagination_per_page'),
+            new OA\Parameter(ref: '#/components/parameters/Pagination_order'),
+            new OA\Parameter(ref: '#/components/parameters/NotificationsFilter__user_id'),
+            new OA\Parameter(ref: '#/components/parameters/NotificationsFilter__transport'),
+            new OA\Parameter(ref: '#/components/parameters/NotificationsFilter__type'),
+            new OA\Parameter(ref: '#/components/parameters/NotificationsFilter__target'),
+            new OA\Parameter(ref: '#/components/parameters/NotificationsFilter__target_id'),
+            new OA\Parameter(ref: '#/components/parameters/NotificationsFilter__title'),
+            new OA\Parameter(ref: '#/components/parameters/NotificationsFilter__text'),
+            new OA\Parameter(ref: '#/components/parameters/NotificationsFilter__only_unread'),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: '', content: new OA\JsonContent(properties: [
+                new OA\Property(property: 'status', type: 'string'),
+                new OA\Property(property: 'data', ref: '#/components/schemas/ResourceNotificationsPaginated'),
+            ])),
+            new OA\Response(response: 401, ref: '#/components/responses/401'),
+            new OA\Response(response: 500, ref: '#/components/responses/500'),
+        ],
+    )]
     public function index(
         RequestInterface $request,
         NotificationsListingService $service
@@ -59,49 +61,51 @@ class NotificationsController extends AbstractController
         );
     }
 
-    /**
-     * @OA\Get(
-     *     path="/v1/notifications/statistic",
-     *     summary="Get notifications statistic",
-     *     operationId="appNotificationStatistic",
-     *     tags={"notifications"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(ref="#/components/parameters/Locale"),
-     *     @OA\Response(response=200, description="", @OA\JsonContent(
-     *         @OA\Property(property="status", type="string"),
-     *         @OA\Property(property="data", ref="#/components/schemas/ResourceNotificationStatistic"),
-     *     )),
-     *     @OA\Response(response=401, ref="#/components/responses/401"),
-     *     @OA\Response(response=500, ref="#/components/responses/500"),
-     * )
-     */
+    #[OA\Get(
+        path: '/v1/notifications/statistic',
+        operationId: 'appNotificationStatistic',
+        summary: 'Get notifications statistic',
+        security: [['bearerAuth' => []]],
+        tags: ['notifications'],
+        parameters: [new OA\Parameter(ref: '#/components/parameters/Locale')],
+        responses: [
+            new OA\Response(response: 200, description: '', content: new OA\JsonContent(properties: [
+                new OA\Property(property: 'status', type: 'string'),
+                new OA\Property(property: 'data', ref: '#/components/schemas/ResourceNotificationStatistic'),
+            ])),
+            new OA\Response(response: 401, ref: '#/components/responses/401'),
+            new OA\Response(response: 500, ref: '#/components/responses/500'),
+        ],
+    )]
     public function statistic(NotificationStatisticService $service): ResourceNotificationStatistic
     {
         return ResourceNotificationStatistic::make($service->statistic());
     }
 
-    /**
-     * @OA\Post(
-     *     path="/v1/notifications/{notificationId}/read",
-     *     summary="Get notifications statistic",
-     *     operationId="appNotificationStatistic",
-     *     tags={"notifications"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Parameter(
-     *         name="notificationId",
-     *         in="path", required=true,
-     *         @OA\Schema(type="integer"),
-     *         description="Notification ID"
-     *     ),
-     *     @OA\Parameter(ref="#/components/parameters/Locale"),
-     *     @OA\Response(response=200, description="", @OA\JsonContent(
-     *         @OA\Property(property="status", type="string"),
-     *         @OA\Property(property="data", ref="#/components/schemas/ResourceNotification"),
-     *     )),
-     *     @OA\Response(response=401, ref="#/components/responses/401"),
-     *     @OA\Response(response=500, ref="#/components/responses/500"),
-     * )
-     */
+    #[OA\Post(
+        path: '/v1/notifications/{notificationId}/read',
+        operationId: 'appNotificationRead',
+        summary: 'Read notification',
+        security: [['bearerAuth' => []]],
+        tags: ['notifications'],
+        parameters: [
+            new OA\Parameter(
+                name: 'notificationId',
+                description: 'Notification ID',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer'),
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: '', content: new OA\JsonContent(properties: [
+                new OA\Property(property: 'status', type: 'string'),
+                new OA\Property(property: 'data', ref: '#/components/schemas/ResourceNotification'),
+            ])),
+            new OA\Response(response: 401, ref: '#/components/responses/401'),
+            new OA\Response(response: 500, ref: '#/components/responses/500'),
+        ]
+    )]
     public function read(int $notificationId, NotificationReadService $service): ResourceNotification
     {
         return ResourceNotification::make($service->read($notificationId));

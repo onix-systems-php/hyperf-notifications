@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfNotifications\Service;
 
 use Hyperf\DbConnection\Annotation\Transactional;
+use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 use Hyperf\Validation\Rule;
 use OnixSystemsPHP\HyperfCore\Constants\ErrorCode;
 use OnixSystemsPHP\HyperfCore\Exception\BusinessException;
@@ -18,7 +19,6 @@ use OnixSystemsPHP\HyperfCore\Service\Service;
 use OnixSystemsPHP\HyperfNotifications\DTO\AddNotificationDTO;
 use OnixSystemsPHP\HyperfNotifications\Model\Notification;
 use OnixSystemsPHP\HyperfNotifications\Repository\NotificationRepository;
-use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 
 #[Service]
 class NotificationAddService
