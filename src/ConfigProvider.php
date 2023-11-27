@@ -10,19 +10,12 @@ declare(strict_types=1);
  */
 namespace OnixSystemsPHP\HyperfNotifications;
 
-use OnixSystemsPHP\HyperfNotifications\Contract\ChatterInterface as AppChatterInterface;
-use OnixSystemsPHP\HyperfNotifications\Contract\TexterInterface as AppTexterInterface;
-use Symfony\Component\Notifier\ChatterInterface as SymfonyChatterInterface;
-use Symfony\Component\Notifier\TexterInterface as SymfonyTexterInterface;
-
 class ConfigProvider
 {
     public function __invoke(): array
     {
         return [
             'dependencies' => [
-                SymfonyTexterInterface::class => AppTexterInterface::class,
-                SymfonyChatterInterface::class => AppChatterInterface::class,
             ],
             'commands' => [
             ],

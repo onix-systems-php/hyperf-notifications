@@ -10,8 +10,6 @@ declare(strict_types=1);
  */
 return [
     'texter' => [
-        'default' => env('NOTIFIER_TEXTER'),
-
         'twilio' => [
             'dsn' => env('TWILIO_DSN'),
             'factory_class' => '',
@@ -19,8 +17,6 @@ return [
     ],
 
     'chatter' => [
-        'default' => env('NOTIFIER_CHATTER'),
-
         'telegram' => [
             'dsn' => env('TELEGRAM_DSN'),
             'factory_class' => '',
