@@ -22,7 +22,8 @@
         "ext-json": "*",
         "ext-redis": "*",
         "onix-systems-php/hyperf-core": ">=1.1.0",
-        "onix-systems-php/hyperf-file-upload": "^1.1"
+        "onix-systems-php/hyperf-file-upload": "^1.1",
+        "symfony/notifier": "^6.3"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",

@@ -28,5 +28,5 @@ composer require onix-systems-php/hyperf-notifications
 Publish database migrations:
 
 ```shell script
-php bin/hyperf.php vendor:publish onix-systems-php/hyperf-actions-log
+php bin/hyperf.php vendor:publish onix-systems-php/notifications
 ```
