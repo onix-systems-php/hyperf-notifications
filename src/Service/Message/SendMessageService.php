@@ -12,8 +12,6 @@ declare(strict_types=1);
 namespace OnixSystemsPHP\HyperfNotifications\Service\Message;
 
 use OnixSystemsPHP\HyperfCore\Service\Service;
-use Swoole\Coroutine;
-use Swoole\Coroutine\Channel;
 use Symfony\Component\Notifier\Message\MessageInterface;
 use Symfony\Component\Notifier\Message\SentMessage;
 
@@ -22,9 +20,6 @@ class SendMessageService extends AbstractMessageService
 {
     public function send(MessageInterface $message): ?SentMessage
     {
-        $channel = new Channel(1);
-        Coroutine::create(fn () => $channel->push($this->getNotifier($message)?->send($message)));
-
-        return $channel->pop();
+        return $this->getNotifier($message)?->send($message);
     }
 }
