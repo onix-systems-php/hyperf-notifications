@@ -21,6 +21,7 @@ use Symfony\Component\Notifier\Message\SmsMessage;
 use Symfony\Component\Notifier\Texter;
 use Symfony\Component\Notifier\Transport\AbstractTransport;
 use Symfony\Component\Notifier\Transport\Dsn;
+use Symfony\Component\Notifier\Transport\TransportInterface;
 
 abstract class AbstractMessageService
 {
@@ -53,7 +54,7 @@ abstract class AbstractMessageService
         return (new $factoryClass())->create(new Dsn($dsn));
     }
 
-    protected function getNotifier(MessageInterface $interface): null|Chatter|Texter
+    protected function getNotifier(MessageInterface $interface): null|TransportInterface
     {
         if ($interface instanceof SmsMessage) {
             return new Texter($this->getTransport('texter', $interface->getTransport()));
