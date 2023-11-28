@@ -12,14 +12,14 @@ return [
     'texter' => [
         'twilio' => [
             'dsn' => env('TWILIO_DSN'),
-            'factory_class' => '',
+            // 'factory_class' => \Symfony\Component\Notifier\Bridge\Twilio\TwilioTransportFactory::class,
         ],
     ],
 
     'chatter' => [
         'telegram' => [
             'dsn' => env('TELEGRAM_DSN'),
-            'factory_class' => '',
+            // 'factory_class' => \Symfony\Component\Notifier\Bridge\Telegram\TelegramTransportFactory::class,
         ],
     ],
 ];
