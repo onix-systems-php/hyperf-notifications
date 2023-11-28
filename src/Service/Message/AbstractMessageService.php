@@ -39,7 +39,10 @@ abstract class AbstractMessageService
 
         $factoryClass = $transportConfig['factory_class'];
         if (! $factoryClass) {
-            throw new RuntimeException('Factory class for "' . $transport . '" transport. Not found!', 400);
+            throw new RuntimeException('Factory class for "' . $transport . '" transport is empty!', 400);
+        }
+        if (! class_exists($factoryClass)) {
+            throw new RuntimeException('Factory class "' . $factoryClass . '". Not found!', 400);
         }
 
         $dsn = $transportConfig['dsn'];
