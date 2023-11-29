@@ -8,12 +8,13 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace OnixSystemsPHP\HyperfNotifications\Model;
 
 use Carbon\Carbon;
+use Hyperf\Context\ApplicationContext;
 use Hyperf\Contract\ConfigInterface;
 use Hyperf\Database\Model\Relations\MorphOne;
-use Hyperf\Utils\ApplicationContext;
 use OnixSystemsPHP\HyperfCore\Model\AbstractOwnedModel;
 use OnixSystemsPHP\HyperfFileUpload\Model\Behaviour\FileRelations;
 use OnixSystemsPHP\HyperfFileUpload\Model\File;
