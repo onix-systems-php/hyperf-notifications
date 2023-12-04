@@ -48,8 +48,8 @@ class NotificationsController extends AbstractController
                 new OA\Property(property: 'status', type: 'string'),
                 new OA\Property(property: 'data', ref: '#/components/schemas/ResourceNotificationsPaginated'),
             ])),
-            new OA\Response(response: 401, ref: '#/components/responses/401'),
-            new OA\Response(response: 500, ref: '#/components/responses/500'),
+            new OA\Response(ref: '#/components/responses/401', response: 401),
+            new OA\Response(ref: '#/components/responses/500', response: 500),
         ],
     )]
     public function index(
@@ -73,8 +73,8 @@ class NotificationsController extends AbstractController
                 new OA\Property(property: 'status', type: 'string'),
                 new OA\Property(property: 'data', ref: '#/components/schemas/ResourceNotificationStatistic'),
             ])),
-            new OA\Response(response: 401, ref: '#/components/responses/401'),
-            new OA\Response(response: 500, ref: '#/components/responses/500'),
+            new OA\Response(ref: '#/components/responses/401', response: 401),
+            new OA\Response(ref: '#/components/responses/500', response: 500),
         ],
     )]
     public function statistic(NotificationStatisticService $service): ResourceNotificationStatistic
@@ -102,8 +102,8 @@ class NotificationsController extends AbstractController
                 new OA\Property(property: 'status', type: 'string'),
                 new OA\Property(property: 'data', ref: '#/components/schemas/ResourceNotification'),
             ])),
-            new OA\Response(response: 401, ref: '#/components/responses/401'),
-            new OA\Response(response: 500, ref: '#/components/responses/500'),
+            new OA\Response(ref: '#/components/responses/401', response: 401),
+            new OA\Response(ref: '#/components/responses/500', response: 500),
         ]
     )]
     public function read(int $notificationId, NotificationReadService $service): ResourceNotification

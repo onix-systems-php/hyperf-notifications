@@ -25,7 +25,7 @@ Install:
 composer require onix-systems-php/hyperf-notifications
 ```
 
-Publish database migrations:
+Publish database migrations and configs:
 
 ```shell script
 php bin/hyperf.php vendor:publish onix-systems-php/hyperf-notifications

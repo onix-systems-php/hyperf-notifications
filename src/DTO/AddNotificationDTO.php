@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace OnixSystemsPHP\HyperfNotifications\DTO;
 
 use OnixSystemsPHP\HyperfCore\DTO\AbstractDTO;
@@ -16,9 +17,8 @@ class AddNotificationDTO extends AbstractDTO
 {
     public int $user_id;
 
-    public string $transport;
-
-    public string $type;
+    /** @var TransportDTO[] */
+    public array $transports;
 
     public ?string $target;
 
