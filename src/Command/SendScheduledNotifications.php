@@ -66,7 +66,7 @@ class SendScheduledNotifications extends HyperfCommand
                     $notification = $delivery->notification;
 
                     if ($transport === 'email') {
-                        $this->emailService->run($user, new ReminderMail($notification->title, $notification->text));
+                        $this->emailService->run($user, new ReminderMail($notification));
                         $this->makeSent($delivery);
                         continue;
                     }
