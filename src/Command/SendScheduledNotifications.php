@@ -57,7 +57,7 @@ class SendScheduledNotifications extends HyperfCommand
             )
             ->whereType(NotificationType::REMINDER)
             ->whereNull('sent_at')
-            ->groupBy('notification_id')
+            ->groupBy(['id', 'notification_id'])
             ->chunkById(self::CHUNK_COUNT, function (iterable $deliveries) {
                 /** @var NotificationDelivery $delivery */
                 foreach ($deliveries as $delivery) {
