@@ -16,7 +16,7 @@ use OpenApi\Attributes as OA;
     properties: [
         new OA\Property('id', type: 'integer'),
         new OA\Property('notification_id', type: 'integer'),
-        new OA\Property('type', type: 'string', enum: [NotificationType::PRIMARY, NotificationType::REMINDER]),
+        new OA\Property('type', type: 'string', enum: NotificationType::ALL),
         new OA\Property('transport', type: 'string'),
         new OA\Property('sent_at', type: 'string'),
         new OA\Property('created_at', type: 'string'),
