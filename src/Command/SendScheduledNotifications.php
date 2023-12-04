@@ -57,7 +57,7 @@ class SendScheduledNotifications extends HyperfCommand
             )
             ->whereType(NotificationType::REMINDER)
             ->whereNull('sent_at')
-            ->groupBy('notification_id')
+            ->groupBy(['id', 'notification_id'])
             ->chunkById(self::CHUNK_COUNT, function (iterable $deliveries) {
                 /** @var NotificationDelivery $delivery */
                 foreach ($deliveries as $delivery) {
@@ -66,7 +66,7 @@ class SendScheduledNotifications extends HyperfCommand
                     $notification = $delivery->notification;
 
                     if ($transport === 'email') {
-                        $this->emailService->run($user, new ReminderMail($notification->title, $notification->text));
+                        $this->emailService->run($user, new ReminderMail($notification));
                         $this->makeSent($delivery);
                         continue;
                     }
