@@ -8,9 +8,10 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace OnixSystemsPHP\HyperfNotifications\Model\Filter;
 
-use Hyperf\Database\Model\Builder;
+use OnixSystemsPHP\HyperfCore\Model\Builder;
 use OnixSystemsPHP\HyperfCore\Model\Filter\AbstractFilter;
 use OpenApi\Attributes as OA;
 
@@ -33,12 +34,18 @@ class NotificationFilter extends AbstractFilter
 
     public function transport(string $param): void
     {
-        $this->builder->where('transport', '=', $param);
+        $this->builder->whereHas(
+            'deliveries',
+            static fn (Builder $builder) => $builder->where('transport', '=', $param)
+        );
     }
 
     public function type(string $param): void
     {
-        $this->builder->where('type', '=', $param);
+        $this->builder->whereHas(
+            'deliveries',
+            static fn (Builder $builder) => $builder->where('type', '=', $param)
+        );
     }
 
     public function target(string $param): void

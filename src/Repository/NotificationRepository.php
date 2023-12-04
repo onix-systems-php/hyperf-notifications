@@ -8,11 +8,12 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace OnixSystemsPHP\HyperfNotifications\Repository;
 
-use Hyperf\Database\Model\Builder;
 use OnixSystemsPHP\HyperfCore\DTO\Common\PaginationRequestDTO;
 use OnixSystemsPHP\HyperfCore\DTO\Common\PaginationResultDTO;
+use OnixSystemsPHP\HyperfCore\Model\Builder;
 use OnixSystemsPHP\HyperfCore\Repository\AbstractRepository;
 use OnixSystemsPHP\HyperfNotifications\Model\Filter\NotificationFilter;
 use OnixSystemsPHP\HyperfNotifications\Model\Notification;
