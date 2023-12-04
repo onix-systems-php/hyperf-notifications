@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace OnixSystemsPHP\HyperfNotifications\Repository;
 
-use Hyperf\Database\Model\Builder;
+use OnixSystemsPHP\HyperfCore\Model\Builder;
 use OnixSystemsPHP\HyperfCore\Repository\AbstractRepository;
 use OnixSystemsPHP\HyperfNotifications\Model\NotificationDelivery;
 
