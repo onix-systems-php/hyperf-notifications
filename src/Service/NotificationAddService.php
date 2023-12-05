@@ -29,9 +29,9 @@ use function Hyperf\Tappable\tap;
 class NotificationAddService
 {
     public function __construct(
-        private NotificationRepository $rNotification,
-        private NotificationDeliveryRepository $rDelivery,
-        private ValidatorFactoryInterface $vf,
+        private readonly NotificationRepository $rNotification,
+        private readonly NotificationDeliveryRepository $rDelivery,
+        private readonly ValidatorFactoryInterface $vf,
     ) {}
 
     #[Transactional(attempts: 1)]
@@ -64,6 +64,7 @@ class NotificationAddService
                 'transports' => ['required', 'array'],
                 'transports.*.type' => ['required', 'string', Rule::in(NotificationType::ALL)],
                 'transports.*.transport' => ['required', 'string', 'max:255'],
+                'transports.*.options' => ['nullable', 'array'],
                 'user_id' => ['required', Rule::exists('users', 'id')],
                 'target' => ['nullable', 'string', 'max:255'],
                 'target_id' => ['nullable', 'string', 'max:255'],

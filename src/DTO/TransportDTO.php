@@ -9,4 +9,6 @@ class TransportDTO extends AbstractDTO
     public string $type;
 
     public string $transport;
+
+    public ?array $options;
 }

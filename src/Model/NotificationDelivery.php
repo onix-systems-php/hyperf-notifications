@@ -20,6 +20,7 @@ use OnixSystemsPHP\HyperfCore\Model\AbstractModel;
  * @property int $notification_id
  * @property string $type
  * @property string $transport
+ * @property ?array $options
  * @property ?Carbon $sent_at
  * @property ?Carbon $created_at
  * @property ?Carbon $updated_at
@@ -34,6 +35,7 @@ class NotificationDelivery extends AbstractModel
         'notification_id',
         'type',
         'transport',
+        'options',
         'sent_at',
     ];
 
@@ -42,6 +44,7 @@ class NotificationDelivery extends AbstractModel
         'notification_id' => 'integer',
         'type' => 'string',
         'transport' => 'string',
+        'options' => 'array',
         'sent_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',

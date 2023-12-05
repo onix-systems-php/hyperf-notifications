@@ -45,6 +45,12 @@ class ConfigProvider
                     'source' => __DIR__ . '/../publish/migrations/2023_11_29_144510_add_notification_deliveries_table.php',
                     'destination' => BASE_PATH . '/migrations/2023_11_29_144510_add_notification_deliveries_table.php',
                 ],
+                [
+                    'id' => 'migration_delivery_options',
+                    'description' => 'The additional migration for onix-systems-php/hyperf-notifications.',
+                    'source' => __DIR__ . '/../publish/migrations/2023_12_05_105257_add_options_to_notification_deliveries_table.php',
+                    'destination' => BASE_PATH . '/migrations/2023_12_05_105257_add_options_to_notification_deliveries_table.php',
+                ],
 
                 [
                     'id' => 'config',
