@@ -95,6 +95,9 @@ class NotificationSendService
         }
         $event = $delivery->options['event'];
         $data = ['title' => $notification->title, 'body' => $notification->text];
+        if ($notification->image) {
+            $data['image_url'] = $notification->image->url;
+        }
 
         // sending to all clients on this node (when using multiple nodes)
         if (! empty($delivery->options['local'])) {
