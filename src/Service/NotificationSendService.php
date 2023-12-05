@@ -94,7 +94,7 @@ class NotificationSendService
             return;
         }
         $event = $delivery->options['event'];
-        $data = ['title' => $notification->title, 'body' => $notification->text];
+        $data = ['id' => $notification->id, 'title' => $notification->title, 'body' => $notification->text];
         if ($notification->image) {
             $data['image_url'] = $notification->image->url;
         }
