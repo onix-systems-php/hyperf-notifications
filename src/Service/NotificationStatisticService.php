@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf.
- * @link     https://www.hyperf.io
- * @document https://hyperf.wiki
- * @contact  group@hyperf.io
+ * This file is part of the extension library for Hyperf.
+ *
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace OnixSystemsPHP\HyperfNotifications\Service;
 
 use Hyperf\DbConnection\Annotation\Transactional;
@@ -18,9 +17,7 @@ use OnixSystemsPHP\HyperfNotifications\Repository\NotificationRepository;
 #[Service]
 class NotificationStatisticService
 {
-    public function __construct(private NotificationRepository $rNotification)
-    {
-    }
+    public function __construct(private NotificationRepository $rNotification) {}
 
     #[Transactional(attempts: 1)]
     public function statistic(): NotificationStatisticResultDTO
