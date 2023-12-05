@@ -94,6 +94,7 @@ class NotificationSendService
         }
         $event = $delivery->options['event'];
 
+        // sending to all clients on this node (when using multiple nodes)
         if (! empty($delivery->options['local'])) {
             $io->local->emit($event, $text);
             return;
