@@ -11,14 +11,19 @@ declare(strict_types=1);
 
 namespace OnixSystemsPHP\HyperfNotifications\Service;
 
+use Hyperf\Context\ApplicationContext;
+use Hyperf\SocketIOServer\SocketIO;
 use OnixSystemsPHP\HyperfCore\Service\Service;
 use OnixSystemsPHP\HyperfMailer\Service\EmailService;
 use OnixSystemsPHP\HyperfNotifications\Constants\NotificationTransport;
 use OnixSystemsPHP\HyperfNotifications\Contract\HasContactPhoneNumber;
 use OnixSystemsPHP\HyperfNotifications\Mail\ReminderMail;
+use OnixSystemsPHP\HyperfNotifications\Model\Notification;
 use OnixSystemsPHP\HyperfNotifications\Model\NotificationDelivery;
 use OnixSystemsPHP\HyperfNotifications\Repository\NotificationDeliveryRepository;
 use OnixSystemsPHP\HyperfNotifications\Service\Message\SendMessageService;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Component\Notifier\Message\ChatMessage;
 use Symfony\Component\Notifier\Message\SmsMessage;
 
@@ -33,6 +38,10 @@ class NotificationSendService
         private readonly NotificationDeliveryRepository $rDelivery,
     ) {}
 
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
     public function run(NotificationDelivery $delivery): void
     {
         $transport = $delivery->transport;
@@ -40,6 +49,7 @@ class NotificationSendService
         $notification = $delivery->notification;
 
         if ($transport === NotificationTransport::SOCKET) {
+            $this->handleSocket($notification);
             return;
         }
 
@@ -68,6 +78,47 @@ class NotificationSendService
             $this->sendMessageService->send($chat);
             $this->makeSent($delivery);
         }
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    private function handleSocket(Notification $notification): void
+    {
+        $io = ApplicationContext::getContainer()->get(SocketIO::class);
+        if (! $io) {
+            return;
+        }
+        if (empty($delivery->options) || empty($delivery->options['event'])) {
+            return;
+        }
+        $event = $delivery->options['event'];
+        $data = ['id' => $notification->id, 'title' => $notification->title, 'body' => $notification->text];
+        if ($notification->image) {
+            $data['image_url'] = $notification->image->url;
+        }
+
+        // sending to all clients on this node (when using multiple nodes)
+        if (! empty($delivery->options['local'])) {
+            $io->local->emit($event, $data);
+            return;
+        }
+
+        // sending to all clients in "$delivery->options['in']" room, including sender
+        if (! empty($delivery->options['in'])) {
+            $io->in($delivery->options['in']);
+        }
+        // sending to all clients in namespace "$delivery->options['of']", including sender
+        if (! empty($delivery->options['of'])) {
+            $io->of($delivery->options['of']);
+        }
+        // sending to a specific room (including sender) or individual socketid (private message)
+        if (! empty($delivery->options['to'])) {
+            $io->to($delivery->options['to']);
+        }
+
+        $io->emit($event, $data);
     }
 
     private function makeSent(NotificationDelivery $delivery): void

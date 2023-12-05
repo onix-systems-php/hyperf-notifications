@@ -51,7 +51,7 @@ class SendScheduledNotifications extends HyperfCommand
             ->whereType(NotificationType::REMINDER)
             ->whereNull('sent_at')
             ->groupBy(['id', 'notification_id'])
-            ->chunkById(self::CHUNK_COUNT, static fn (iterable $deliveries) => $this->handleIterable($deliveries));
+            ->chunkById(self::CHUNK_COUNT, fn (iterable $deliveries) => $this->handleIterable($deliveries));
     }
 
     private function handleIterable(iterable $deliveries): void
