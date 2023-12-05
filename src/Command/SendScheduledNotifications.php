@@ -14,14 +14,9 @@ namespace OnixSystemsPHP\HyperfNotifications\Command;
 use Hyperf\Command\Annotation\Command;
 use Hyperf\Command\Command as HyperfCommand;
 use OnixSystemsPHP\HyperfCore\Model\Builder;
-use OnixSystemsPHP\HyperfMailer\Service\EmailService;
 use OnixSystemsPHP\HyperfNotifications\Constants\NotificationType;
-use OnixSystemsPHP\HyperfNotifications\Mail\ReminderMail;
 use OnixSystemsPHP\HyperfNotifications\Model\NotificationDelivery;
-use OnixSystemsPHP\HyperfNotifications\Repository\NotificationDeliveryRepository;
-use OnixSystemsPHP\HyperfNotifications\Service\Message\SendMessageService;
-use Symfony\Component\Notifier\Message\ChatMessage;
-use Symfony\Component\Notifier\Message\SmsMessage;
+use OnixSystemsPHP\HyperfNotifications\Service\NotificationSendService;
 
 use function Hyperf\Config\config;
 
@@ -31,9 +26,7 @@ class SendScheduledNotifications extends HyperfCommand
     private const CHUNK_COUNT = 1000;
 
     public function __construct(
-        private readonly SendMessageService $sendMessageService,
-        private readonly EmailService $emailService,
-        private readonly NotificationDeliveryRepository $rDelivery,
+        private readonly NotificationSendService $notificationSendService,
     ) {
         parent::__construct('reminders:send');
     }
@@ -58,58 +51,13 @@ class SendScheduledNotifications extends HyperfCommand
             ->whereType(NotificationType::REMINDER)
             ->whereNull('sent_at')
             ->groupBy(['id', 'notification_id'])
-            ->chunkById(self::CHUNK_COUNT, function (iterable $deliveries) {
-                /** @var NotificationDelivery $delivery */
-                foreach ($deliveries as $delivery) {
-                    $transport = $delivery->transport;
-                    $user = $delivery->notification->user;
-                    $notification = $delivery->notification;
-
-                    if ($transport === 'email') {
-                        $this->emailService->run($user, new ReminderMail($notification));
-                        $this->makeSent($delivery);
-                        continue;
-                    }
-                    if (in_array($transport, config('notifier.texter'), true)) {
-                        if (! $phone = $this->getUserPhoneNumber($user)) {
-                            continue;
-                        }
-                        $sms = new SmsMessage($phone, $notification->title);
-                        $sms->transport($transport);
-                        $this->sendMessageService->send($sms);
-                        $this->makeSent($delivery);
-                        continue;
-                    }
-                    if (in_array($transport, config('notifier.chatter'), true)) {
-                        $chat = new ChatMessage($notification->title);
-                        $chat->transport($transport);
-
-                        $this->sendMessageService->send($chat);
-                        $this->makeSent($delivery);
-                    }
-                }
-            });
+            ->chunkById(self::CHUNK_COUNT, static fn (iterable $deliveries) => $this->handleIterable($deliveries));
     }
 
-    private function getUserPhoneNumber(object $user): ?string
+    private function handleIterable(iterable $deliveries): void
     {
-        $phone = null;
-        if (property_exists($user, 'phone')) {
-            $phone = $user->phone;
+        foreach ($deliveries as $delivery) {
+            $this->notificationSendService->run($delivery);
         }
-        if (property_exists($user, 'phoneNumber')) {
-            $phone = $user->phoneNumber;
-        }
-        if (property_exists($user, 'phone_number')) {
-            $phone = $user->phone_number;
-        }
-
-        return $phone;
-    }
-
-    private function makeSent(NotificationDelivery $delivery): void
-    {
-        $delivery->sent();
-        $this->rDelivery->save($delivery);
     }
 }
