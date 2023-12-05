@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf.
- * @link     https://www.hyperf.io
- * @document https://hyperf.wiki
- * @contact  group@hyperf.io
+ * This file is part of the extension library for Hyperf.
+ *
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 
@@ -24,6 +22,7 @@ use OnixSystemsPHP\HyperfNotifications\Repository\NotificationDeliveryRepository
 use OnixSystemsPHP\HyperfNotifications\Repository\NotificationRepository;
 
 use function Hyperf\Tappable\tap;
+use function Hyperf\Translation\__;
 
 #[Service]
 class NotificationAddService

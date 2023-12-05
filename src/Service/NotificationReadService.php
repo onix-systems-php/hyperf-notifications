@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 /**
- * This file is part of Hyperf.
- * @link     https://www.hyperf.io
- * @document https://hyperf.wiki
- * @contact  group@hyperf.io
+ * This file is part of the extension library for Hyperf.
+ *
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+
 namespace OnixSystemsPHP\HyperfNotifications\Service;
 
 use Carbon\Carbon;
@@ -18,12 +17,13 @@ use OnixSystemsPHP\HyperfCore\Service\Service;
 use OnixSystemsPHP\HyperfNotifications\Model\Notification;
 use OnixSystemsPHP\HyperfNotifications\Repository\NotificationRepository;
 
+use function Hyperf\Tappable\tap;
+use function Hyperf\Translation\__;
+
 #[Service]
 class NotificationReadService
 {
-    public function __construct(private NotificationRepository $rNotification)
-    {
-    }
+    public function __construct(private NotificationRepository $rNotification) {}
 
     #[Transactional(attempts: 1)]
     public function read(int $notificationId): Notification

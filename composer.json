@@ -21,9 +21,9 @@
         "php": ">=8.1",
         "ext-json": "*",
         "ext-redis": "*",
-        "onix-systems-php/hyperf-core": ">=1.1.0",
-        "onix-systems-php/hyperf-file-upload": "^1.1",
-        "onix-systems-php/hyperf-mailer": "^1.1",
+        "onix-systems-php/hyperf-core": ">=1.2.0",
+        "onix-systems-php/hyperf-file-upload": "^1.2",
+        "onix-systems-php/hyperf-mailer": "^1.2",
         "symfony/notifier": "^6.3"
     },
     "require-dev": {

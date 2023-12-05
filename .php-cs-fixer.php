@@ -1,10 +1,8 @@
 <?php
 
 $header = <<<'EOF'
-This file is part of Hyperf.
-@link     https://www.hyperf.io
-@document https://hyperf.wiki
-@contact  group@hyperf.io
+This file is part of the extension library for Hyperf.
+
 @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
 EOF;
 
@@ -22,13 +20,13 @@ return (new PhpCsFixer\Config())
             'location' => 'after_declare_strict',
         ],
         'array_syntax' => [
-            'syntax' => 'short'
+            'syntax' => 'short',
         ],
         'list_syntax' => [
-            'syntax' => 'short'
+            'syntax' => 'short',
         ],
         'concat_space' => [
-            'spacing' => 'one'
+            'spacing' => 'one',
         ],
         'blank_line_before_statement' => [
             'statements' => [
@@ -37,7 +35,7 @@ return (new PhpCsFixer\Config())
         ],
         'general_phpdoc_annotation_remove' => [
             'annotations' => [
-                'author'
+                'author',
             ],
         ],
         'ordered_imports' => [

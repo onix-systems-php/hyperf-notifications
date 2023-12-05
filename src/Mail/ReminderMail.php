@@ -1,10 +1,16 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of the extension library for Hyperf.
+ *
+ * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
+ */
+
 namespace OnixSystemsPHP\HyperfNotifications\Mail;
 
 use OnixSystemsPHP\HyperfMailer\Contract\ShouldQueue;
 use OnixSystemsPHP\HyperfMailer\Mailable;
-use OnixSystemsPHP\HyperfMailer\Message;
 use OnixSystemsPHP\HyperfNotifications\Model\Notification;
 
 class ReminderMail extends Mailable implements ShouldQueue
