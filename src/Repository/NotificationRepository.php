@@ -35,12 +35,12 @@ class NotificationRepository extends AbstractRepository
         PaginationRequestDTO $paginationDTO,
         array $contain = []
     ): PaginationResultDTO {
-        $query = $this->filter(new NotificationFilter($filters));
+        $query = $this->query()->filter(new NotificationFilter($filters));
         if (! empty($contain)) {
             $query->with($contain);
         }
 
-        return $this->paginate($query, $paginationDTO);
+        return $query->paginateDTO($paginationDTO);
     }
 
     public function getById(int $id, bool $lock = false, bool $force = false): ?Notification
