@@ -13,6 +13,7 @@ namespace OnixSystemsPHP\HyperfNotifications\Service;
 
 use OnixSystemsPHP\HyperfCore\Service\Service;
 use OnixSystemsPHP\HyperfMailer\Service\EmailService;
+use OnixSystemsPHP\HyperfNotifications\Contract\HasContactPhoneNumber;
 use OnixSystemsPHP\HyperfNotifications\Mail\ReminderMail;
 use OnixSystemsPHP\HyperfNotifications\Model\NotificationDelivery;
 use OnixSystemsPHP\HyperfNotifications\Repository\NotificationDeliveryRepository;
@@ -48,10 +49,11 @@ class NotificationSendService
         }
 
         if (in_array($transport, config('notifier.texter'), true)) {
-            if (! $phone = $this->getUserPhoneNumber($user)) {
+            if (! $user instanceof HasContactPhoneNumber) {
                 return;
             }
-            $sms = new SmsMessage($phone, $notification->title);
+
+            $sms = new SmsMessage($user->getContactPhoneNumber(), $notification->title);
             $sms->transport($transport);
             $this->sendMessageService->send($sms);
             $this->makeSent($delivery);
@@ -65,22 +67,6 @@ class NotificationSendService
             $this->sendMessageService->send($chat);
             $this->makeSent($delivery);
         }
-    }
-
-    private function getUserPhoneNumber(object $user): ?string
-    {
-        $phone = null;
-        if (property_exists($user, 'phone')) {
-            $phone = $user->phone;
-        }
-        if (property_exists($user, 'phoneNumber')) {
-            $phone = $user->phoneNumber;
-        }
-        if (property_exists($user, 'phone_number')) {
-            $phone = $user->phone_number;
-        }
-
-        return $phone;
     }
 
     private function makeSent(NotificationDelivery $delivery): void
