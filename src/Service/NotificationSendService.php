@@ -18,6 +18,7 @@ use OnixSystemsPHP\HyperfMailer\Service\EmailService;
 use OnixSystemsPHP\HyperfNotifications\Constants\NotificationTransport;
 use OnixSystemsPHP\HyperfNotifications\Contract\HasContactPhoneNumber;
 use OnixSystemsPHP\HyperfNotifications\Mail\ReminderMail;
+use OnixSystemsPHP\HyperfNotifications\Model\Notification;
 use OnixSystemsPHP\HyperfNotifications\Model\NotificationDelivery;
 use OnixSystemsPHP\HyperfNotifications\Repository\NotificationDeliveryRepository;
 use OnixSystemsPHP\HyperfNotifications\Service\Message\SendMessageService;
@@ -48,7 +49,7 @@ class NotificationSendService
         $notification = $delivery->notification;
 
         if ($transport === NotificationTransport::SOCKET) {
-            $this->handleSocket($notification->text);
+            $this->handleSocket($notification);
             return;
         }
 
@@ -83,7 +84,7 @@ class NotificationSendService
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    private function handleSocket(string $text): void
+    private function handleSocket(Notification $notification): void
     {
         $io = ApplicationContext::getContainer()->get(SocketIO::class);
         if (! $io) {
@@ -93,10 +94,11 @@ class NotificationSendService
             return;
         }
         $event = $delivery->options['event'];
+        $data = ['title' => $notification->title, 'body' => $notification->text];
 
         // sending to all clients on this node (when using multiple nodes)
         if (! empty($delivery->options['local'])) {
-            $io->local->emit($event, $text);
+            $io->local->emit($event, $data);
             return;
         }
 
@@ -113,7 +115,7 @@ class NotificationSendService
             $io->to($delivery->options['to']);
         }
 
-        $io->emit($event, $text);
+        $io->emit($event, $data);
     }
 
     private function makeSent(NotificationDelivery $delivery): void
