@@ -13,6 +13,7 @@ namespace OnixSystemsPHP\HyperfNotifications\Service;
 
 use OnixSystemsPHP\HyperfCore\Service\Service;
 use OnixSystemsPHP\HyperfMailer\Service\EmailService;
+use OnixSystemsPHP\HyperfNotifications\Constants\NotificationTransport;
 use OnixSystemsPHP\HyperfNotifications\Contract\HasContactPhoneNumber;
 use OnixSystemsPHP\HyperfNotifications\Mail\ReminderMail;
 use OnixSystemsPHP\HyperfNotifications\Model\NotificationDelivery;
@@ -38,11 +39,11 @@ class NotificationSendService
         $user = $delivery->notification->user;
         $notification = $delivery->notification;
 
-        if ($transport === 'socket') {
+        if ($transport === NotificationTransport::SOCKET) {
             return;
         }
 
-        if ($transport === 'email') {
+        if ($transport === NotificationTransport::EMAIL) {
             $this->emailService->run($user, new ReminderMail($notification));
             $this->makeSent($delivery);
             return;
