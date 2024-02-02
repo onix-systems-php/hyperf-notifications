@@ -26,13 +26,13 @@ class NotificationStatisticService
     ) {}
 
     #[Transactional(attempts: 1)]
-    public function statistic(): NotificationStatisticResultDTO
+    public function run(): NotificationStatisticResultDTO
     {
         return NotificationStatisticResultDTO::make([
             'count' => $this->rNotification->query()
                 ->whereHas('deliveries', fn (Builder $builder) => $builder->where('type', '=', NotificationType::PRIMARY))
-                ->where('user_id', '=', $this->coreAuthenticatableProvider->user()->getId())
-                ->whereNull('seen_at')
+                ->finder('userId', $this->coreAuthenticatableProvider->user()->getId())
+                ->finder('seenAt')
                 ->count(),
         ]);
     }

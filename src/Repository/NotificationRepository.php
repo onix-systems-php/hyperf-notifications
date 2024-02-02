@@ -50,4 +50,14 @@ class NotificationRepository extends AbstractRepository
     {
         $query->where('id', '=', $id);
     }
+
+    public function scopeUserId(Builder $query, int $userId): void
+    {
+        $query->where('user_id', '=', $userId);
+    }
+
+    public function scopeSeenAt(Builder $query, bool $viewed = true): void
+    {
+        $viewed ? $query->whereNull('seen_at') : $query->whereNotNull('seen_at');
+    }
 }
