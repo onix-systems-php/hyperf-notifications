@@ -32,7 +32,7 @@ class NotificationStatisticService
             'count' => $this->rNotification->query()
                 ->whereHas('deliveries', fn (Builder $builder) => $builder->where('type', '=', NotificationType::PRIMARY))
                 ->finder('userId', $this->coreAuthenticatableProvider->user()->getId())
-                ->finder('seenAt')
+                ->finder('seen')
                 ->count(),
         ]);
     }
