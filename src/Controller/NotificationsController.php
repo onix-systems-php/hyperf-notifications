@@ -78,7 +78,7 @@ class NotificationsController extends AbstractController
     )]
     public function statistic(NotificationStatisticService $service): ResourceNotificationStatistic
     {
-        return ResourceNotificationStatistic::make($service->statistic());
+        return ResourceNotificationStatistic::make($service->run());
     }
 
     #[OA\Post(
