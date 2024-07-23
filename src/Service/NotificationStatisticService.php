@@ -21,19 +21,29 @@ use OnixSystemsPHP\HyperfNotifications\Repository\NotificationRepository;
 class NotificationStatisticService
 {
     public function __construct(
-        private NotificationRepository $rNotification,
-        private CoreAuthenticatableProvider $coreAuthenticatableProvider,
+        private readonly NotificationRepository $rNotification,
+        private readonly CoreAuthenticatableProvider $coreAuthenticatableProvider,
     ) {}
 
     #[Transactional(attempts: 1)]
     public function run(): NotificationStatisticResultDTO
     {
+        $user = $this->coreAuthenticatableProvider->user();
+
         return NotificationStatisticResultDTO::make([
-            'count' => $this->rNotification->query()
-                ->whereHas('deliveries', fn (Builder $builder) => $builder->where('type', '=', NotificationType::PRIMARY))
-                ->finder('userId', $this->coreAuthenticatableProvider->user()->getId())
-                ->finder('seen')
-                ->count(),
+            'count' => empty($user) ? 0 : $this->getNotificationQuantityByUserId($user->getId()),
         ]);
+    }
+
+    private function getNotificationQuantityByUserId(int $userId): int
+    {
+        return $this->rNotification->query()
+            ->whereHas(
+                'deliveries',
+                fn (Builder $builder) => $builder->where('type', '=', NotificationType::PRIMARY)
+            )
+            ->finder('userId', $userId)
+            ->finder('seen')
+            ->count();
     }
 }
