@@ -19,7 +19,7 @@ use OnixSystemsPHP\HyperfNotifications\Repository\NotificationRepository;
 class NotificationsListingService
 {
     public function __construct(
-        private NotificationRepository $rNotification,
+        private readonly NotificationRepository $rNotification,
     ) {}
 
     #[Transactional(attempts: 1)]

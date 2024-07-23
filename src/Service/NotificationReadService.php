@@ -23,7 +23,7 @@ use function Hyperf\Translation\__;
 #[Service]
 class NotificationReadService
 {
-    public function __construct(private NotificationRepository $rNotification) {}
+    public function __construct(private readonly NotificationRepository $rNotification) {}
 
     #[Transactional(attempts: 1)]
     public function read(int $notificationId): Notification
